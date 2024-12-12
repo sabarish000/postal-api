@@ -10,8 +10,6 @@ import org.springframework.context.annotation.Configuration;
 public class DataLoader {
     @Bean
     CommandLineRunner loadData(PostalAddressRepository postalAddressRepository) {
-        return args -> MockDataUtils.POSTAL_ADDRESS.forEach(address -> {
-            postalAddressRepository.save(address);
-        });
+        return args -> MockDataUtils.POSTAL_ADDRESS.forEach(postalAddressRepository::save);
     }
 }

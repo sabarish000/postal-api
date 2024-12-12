@@ -6,7 +6,6 @@ import com.example.search.postal.mappers.PostalAddressMapper;
 import com.example.search.postal.models.PostalAddress;
 import com.example.search.postal.services.PostalAddressService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
