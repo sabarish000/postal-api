@@ -1,6 +1,8 @@
 package com.example.search.postal.services;
 
 import com.example.search.postal.models.PostalAddress;
+import com.example.search.postal.models.Role;
+import com.example.search.postal.models.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -105,5 +107,11 @@ public class MockDataUtils {
                     "Schleswig-Holstein", "Germany"),
             new PostalAddress("56068", "Löhrstrasse", "28", "Koblenz", "Rhineland-Palatinate Region", "Altstadt",
                     "Rhineland-Palatinate", "Germany")
+    );
+
+    public static final List<User> USERS = List.of(
+            new User("admin01", "12345", Role.ADMIN),
+            new User("user01", "0123", Role.USER),
+            new User("emp01", "0123", Role.EMPLOYEE)
     );
 }
