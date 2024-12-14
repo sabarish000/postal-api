@@ -3,9 +3,9 @@ package com.example.search.postal.services;
 import com.example.search.postal.models.PostalAddress;
 import com.example.search.postal.models.Role;
 import com.example.search.postal.models.User;
+import com.example.search.postal.security.PasswordUtils;
 
 import java.util.List;
-import java.util.Optional;
 
 public class MockDataUtils {
     public static final List<PostalAddress> POSTAL_ADDRESS = List.of(
@@ -110,8 +110,8 @@ public class MockDataUtils {
     );
 
     public static final List<User> USERS = List.of(
-            new User("admin01", "12345", Role.ADMIN),
-            new User("user01", "0123", Role.USER),
-            new User("emp01", "0123", Role.EMPLOYEE)
+            new User("admin01", PasswordUtils.encode("12345"), Role.ADMIN),
+            new User("user01", PasswordUtils.encode("0123"), Role.USER),
+            new User("emp01", PasswordUtils.encode("0123"), Role.EMPLOYEE)
     );
 }

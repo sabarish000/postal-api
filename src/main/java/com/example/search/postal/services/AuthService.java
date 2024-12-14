@@ -1,7 +1,9 @@
 package com.example.search.postal.services;
 
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import com.example.search.postal.models.User;
+import com.example.search.postal.repositories.UserRepository;
+import com.example.search.postal.security.PasswordUtils;
+import org.jboss.logging.Logger;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +11,11 @@ import java.util.Optional;
 
 @Service
 public class AuthService {
-    private final AuthenticationManager authenticationManager;
+    Logger logger = Logger.getLogger(AuthService.class);
+    private final UserRepository userRepository;
 
-    public AuthService(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
+    public AuthService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     /**
@@ -21,15 +24,22 @@ public class AuthService {
      * @param username The user's username.
      * @param password The user's password.
      * @throws AuthenticationException if the authentication fails.
+     * @return User for successful authentication.
      */
-    public void authenticate(String username, String password) {
-        try {
-            // Uses Spring Security's AuthenticationManager to authenticate the user.
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username, password)
-            );
-        } catch (AuthenticationException e) {
-            throw new RuntimeException("Invalid username or password", e);
+    public User authenticate(String username, String password) {
+        logger.info("Authenticating user: " + username);
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+
+        if (optionalUser.isEmpty()) {
+            throw new RuntimeException("Invalid username or password");
         }
+
+        User user = optionalUser.get();
+
+        if (!PasswordUtils.matches(password, user.getPassword())) {
+            throw new RuntimeException("Invalid username or password");
+        }
+
+        return user;
     }
 }

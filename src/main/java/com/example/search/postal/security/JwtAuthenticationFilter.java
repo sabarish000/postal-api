@@ -24,15 +24,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getServletPath();
+        return path.equals("/api/auth/login"); // Do not filter login URL
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+//        String path = request.getServletPath();
+//        if (path.equals("/api/auth/login")) {
+//            logger.info("processing login request");
+//            filterChain.doFilter(request, response);
+//            return; // Skip the JWT check for this path
+//        }
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String token = authorizationHeader.substring(7); // removes 'Bearer ' from 'Authorization' string
             String username = jwtTokenUtil.extractUsername(token);
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null
-                    && jwtTokenUtil.isTokenExpired(token)) {
+                    && !jwtTokenUtil.isTokenExpired(token)) {
                 UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(username, null, userService.getAuthorities(username));
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -40,5 +52,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             }
         }
+        filterChain.doFilter(request, response);
     }
 }

@@ -2,23 +2,25 @@ package com.example.search.postal.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
+import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 
 @Component
 public class JwtTokenUtil {
-    private static final String SECRET_KEY = "secret_key_hour";
     private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
+    private static final Key KEY = Keys.hmacShaKeyFor(Base64.getDecoder().decode("2zYjVlZmk5yMEcQRtyFQd2DoTYtRz2Ez8Bsb6IlMiFU="));
 
     // Generate JWT Token
     public String generateToken(String username) {
         return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .subject(username)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(KEY)
                 .compact();
     }
 
@@ -37,7 +39,7 @@ public class JwtTokenUtil {
     // Extract claims
     private Claims getClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(KEY)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
