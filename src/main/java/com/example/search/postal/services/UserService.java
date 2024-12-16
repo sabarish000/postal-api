@@ -4,7 +4,6 @@ import com.example.search.postal.dtos.UserRequestDTO;
 import com.example.search.postal.dtos.UserResponseDTO;
 import com.example.search.postal.exceptions.ResourceNotFoundException;
 import com.example.search.postal.mappers.UserMapper;
-import com.example.search.postal.models.Role;
 import com.example.search.postal.models.User;
 import com.example.search.postal.repositories.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,11 +11,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -77,7 +75,7 @@ public class UserService {
      */
     public List<GrantedAuthority> getAuthorities(String username) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found with username: " + username));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
 
         // Convert user roles to Spring Security's GrantedAuthority
         return List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));

@@ -26,7 +26,8 @@ public class JwtTokenUtil {
 
     // Extract username from the token
     public String extractUsername(String token) {
-        return getClaims(token).getSubject();
+        return getClaims(token)
+                .getSubject();
     }
 
     // Check if token is expired

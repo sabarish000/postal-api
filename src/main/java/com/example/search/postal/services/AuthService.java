@@ -31,13 +31,13 @@ public class AuthService {
         Optional<User> optionalUser = userRepository.findByUsername(username);
 
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException("Invalid username or password");
+            throw new AuthenticationException("Invalid username or password") {};
         }
 
         User user = optionalUser.get();
 
         if (!PasswordUtils.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid username or password");
+            throw new AuthenticationException("Invalid username or password") {};
         }
 
         return user;

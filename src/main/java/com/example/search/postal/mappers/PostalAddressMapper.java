@@ -2,10 +2,10 @@ package com.example.search.postal.mappers;
 
 import com.example.search.postal.dtos.PostalAddressRequestDTO;
 import com.example.search.postal.dtos.PostalAddressResponseDTO;
+import com.example.search.postal.models.City;
 import com.example.search.postal.models.PostalAddress;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PostalAddressMapper {
@@ -22,17 +22,16 @@ public class PostalAddressMapper {
                 .postalCode(address.getPostCode())
                 .street(address.getStreetName())
                 .number(address.getNumber())
-                .city(address.getCity())
-                .region(address.getRegion())
-                .district(address.getDistrict())
-                .state(address.getState())
-                .country(address.getCountry())
+                .city(address.getCity().getName())
+                .region(address.getCity().getRegion())
+                .district(address.getCity().getDistrict())
+                .state(address.getCity().getState())
+                .country(address.getCity().getCountry())
                 .build();
     }
 
     // Convert PostalAddressRequestDTO to PostalAddress
-    public static PostalAddress toEntity(PostalAddressRequestDTO dto) {
-        return new PostalAddress(dto.getPostalCode(), dto.getStreet(), dto.getNumber(), dto.getCity(),
-                dto.getRegion(), dto.getDistrict(), dto.getState(), dto.getCountry());
+    public static PostalAddress toEntity(PostalAddressRequestDTO dto, City city) {
+        return new PostalAddress(dto.getPostalCode(), dto.getStreet(), dto.getNumber(), city);
     }
 }

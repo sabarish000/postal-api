@@ -2,10 +2,9 @@ package com.example.search.postal.controllers;
 
 import com.example.search.postal.dtos.PostalAddressRequestDTO;
 import com.example.search.postal.dtos.PostalAddressResponseDTO;
-import com.example.search.postal.mappers.PostalAddressMapper;
-import com.example.search.postal.models.PostalAddress;
 import com.example.search.postal.services.PostalAddressService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +28,8 @@ public class PostalAddressController {
      */
     @PostMapping
     public ResponseEntity<PostalAddressResponseDTO> createPostalAddress(@Valid @RequestBody PostalAddressRequestDTO addressRequestDTO) {
-        PostalAddress address = PostalAddressMapper.toEntity(addressRequestDTO);
-        PostalAddress saveAddress = postalAddressService.saveAddress(address);
-        return ResponseEntity.status(HttpStatus.CREATED).body(PostalAddressMapper.toResponseDTO(saveAddress));
+        PostalAddressResponseDTO savedAddress = postalAddressService.saveAddress(addressRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedAddress);
     }
 
 
@@ -41,24 +39,24 @@ public class PostalAddressController {
      * @param postalCode The postal code to search for.
      * @return List of postal addresses that match the postal code.
      */
-    @GetMapping("/search/byPostalCode")
-    public ResponseEntity<List<PostalAddressResponseDTO>> searchByPostalCode(@RequestParam String postalCode) {
-        List<PostalAddress> addresses = postalAddressService.searchByPostalCode(postalCode);
-        return ResponseEntity.ok(PostalAddressMapper.toResponseDTOs(addresses));
+    @GetMapping("/search/by-postal-code")
+    public ResponseEntity<List<PostalAddressResponseDTO>> searchByPostalCode(@RequestParam(name="postal_code") String postalCode) {
+        List<PostalAddressResponseDTO> addresses = postalAddressService.searchByPostalCode(postalCode);
+        return ResponseEntity.ok(addresses);
     }
 
 
     /**
      * Endpoint to search for postal addresses by city and address (area or street).
      *
-     * @param city    The city to search for.
-     * @param address The street or area to search for.
-     * @return List of postal addresses that match the city and address.
+     * @param cityCode    The city code to search for.
+     * @param searchText The street or area to search for.
+     * @return List of postal addresses that match the city and street.
      */
-    @GetMapping("/search/byCityAndAddress")
-    public ResponseEntity<List<PostalAddressResponseDTO>> searchByCityAndAddress(@RequestParam String city,
-                                                                                 @RequestParam String address) {
-        List<PostalAddress> addresses = postalAddressService.searchByCityAndAddress(city, address);
-        return ResponseEntity.ok(PostalAddressMapper.toResponseDTOs(addresses));
+    @GetMapping("/search/by-city-and-address")
+    public ResponseEntity<List<PostalAddressResponseDTO>> searchByCityAndAddress(@NotBlank @RequestParam(name="city_code") String cityCode,
+                                                                                 @RequestParam(name="search_text", required = false) String searchText) {
+        List<PostalAddressResponseDTO> addresses = postalAddressService.searchByCityAndAddress(cityCode, searchText);
+        return ResponseEntity.ok(addresses);
     }
 }

@@ -32,12 +32,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-//        String path = request.getServletPath();
-//        if (path.equals("/api/auth/login")) {
-//            logger.info("processing login request");
-//            filterChain.doFilter(request, response);
-//            return; // Skip the JWT check for this path
-//        }
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String token = authorizationHeader.substring(7); // removes 'Bearer ' from 'Authorization' string

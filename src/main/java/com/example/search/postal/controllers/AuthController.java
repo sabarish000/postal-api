@@ -29,7 +29,7 @@ public class AuthController {
     public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody LoginRequestDTO loginRequest) {
         User loggedInUser = authService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
         String token = jwtTokenUtil.generateToken(loggedInUser.getUsername());
-        logger.info("JWT token" + token);
+        logger.debug(loggedInUser.getUsername() + " is logged in");
         return ResponseEntity.ok(new AuthResponseDTO(token));
     }
 }
