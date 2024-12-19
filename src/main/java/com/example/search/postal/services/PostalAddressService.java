@@ -23,7 +23,7 @@ public class PostalAddressService {
     }
 
     public List<PostalAddressResponseDTO> searchByPostalCode(String postalCode) {
-        return PostalAddressMapper.toResponseDTOs(postalAddressRepository.findByPostCode(postalCode));
+        return PostalAddressMapper.toResponseDTOs(postalAddressRepository.findByPostCodeContaining(postalCode));
     }
 
     public List<PostalAddressResponseDTO> searchByCityAndAddress(String cityCode, String searchText) {

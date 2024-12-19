@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PostalAddressRepository extends JpaRepository< PostalAddress, Long> {
-    List<PostalAddress> findByPostCode(String postCode);
+    List<PostalAddress> findByPostCodeContaining(String postCode);
 
     @Query("""
                     SELECT p FROM PostalAddress p
