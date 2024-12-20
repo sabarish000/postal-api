@@ -19,4 +19,9 @@ public class TestSecurityConfig {
                 ); // Bypass security for tests
         return http.build();
     }
+
+    @Bean
+    public JwtTokenUtil jwtTokenUtil() {
+        return new JwtTokenUtil(); // Provide a mock or a real instance as needed
+    }
 }

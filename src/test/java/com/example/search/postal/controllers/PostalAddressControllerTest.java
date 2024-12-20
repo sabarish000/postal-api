@@ -38,8 +38,7 @@ public class PostalAddressControllerTest {
 
     @MockitoBean
     private PostalAddressService postalAddressService;
-    @MockitoBean
-    private JwtTokenUtil jwtTokenUtil;
+
     @MockitoBean
     private UserService userService;
 
