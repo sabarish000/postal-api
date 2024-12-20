@@ -5,6 +5,7 @@ import com.example.search.postal.dtos.PostalAddressResponseDTO;
 import com.example.search.postal.models.City;
 import com.example.search.postal.models.PostalAddress;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,7 @@ public class PostalAddressMapper {
 
     public static PostalAddressResponseDTO toResponseDTO(PostalAddress address) {
         return PostalAddressResponseDTO.builder()
+                .id(address.getId())
                 .postalCode(address.getPostCode())
                 .street(address.getStreetName())
                 .number(address.getNumber())
@@ -32,6 +34,13 @@ public class PostalAddressMapper {
 
     // Convert PostalAddressRequestDTO to PostalAddress
     public static PostalAddress toEntity(PostalAddressRequestDTO dto, City city) {
-        return new PostalAddress(dto.getPostalCode(), dto.getStreet(), dto.getNumber(), city);
+        PostalAddress address = new PostalAddress(dto.getPostalCode(), dto.getStreet(), dto.getNumber(), city);
+        address.setId(dto.getId());
+        LocalDateTime now = LocalDateTime.now();
+        if(dto.getId() == null) {
+            address.setCreatedTime(now);
+        }
+        address.setUpdatedTime(now);
+        return address;
     }
 }

@@ -4,12 +4,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Optional;
 
 @Getter
 @Setter
 @Builder
 public class PostalAddressResponseDTO {
+    private Long id;
     private String postalCode;
     private String street;
     private String number;

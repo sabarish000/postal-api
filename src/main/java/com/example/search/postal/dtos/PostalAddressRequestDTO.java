@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PostalAddressRequestDTO {
+    private Long id;
     @NotBlank(message = "Postal code is mandatory")
     private String postalCode;
     @NotBlank(message = "Street is mandatory")
