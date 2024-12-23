@@ -2,6 +2,7 @@ package com.example.search.postal.controllers;
 
 import com.example.search.postal.dtos.AuthResponseDTO;
 import com.example.search.postal.dtos.LoginRequestDTO;
+import com.example.search.postal.models.Role;
 import com.example.search.postal.models.User;
 import com.example.search.postal.security.JwtTokenUtil;
 import com.example.search.postal.services.AuthService;
@@ -17,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 public class AuthControllerTest {
@@ -37,6 +37,7 @@ public class AuthControllerTest {
         loginRequestDTO.setPassword("testpassword");
         user = new User();
         user.setUsername("testuser");
+        user.setRole(Role.USER);
     }
 
     @Test
