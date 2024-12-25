@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PostalAddressService {
+public class PostalAddressService implements IPostalAddressService{
     private final PostalAddressRepository postalAddressRepository;
     private final CityRepository cityRepository;
 

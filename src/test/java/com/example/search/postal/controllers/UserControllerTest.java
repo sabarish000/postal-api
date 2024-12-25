@@ -4,7 +4,7 @@ import com.example.search.postal.dtos.UserRequestDTO;
 import com.example.search.postal.dtos.UserResponseDTO;
 import com.example.search.postal.models.Role;
 import com.example.search.postal.security.TestSecurityConfig;
-import com.example.search.postal.services.UserService;
+import com.example.search.postal.services.IUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ public class UserControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
-    private UserService userService;
+    private IUserService userService;
 
     @InjectMocks
     private UserController userController;

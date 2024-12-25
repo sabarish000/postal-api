@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -21,6 +21,7 @@ public class UserService {
     }
 
     // Create a new user
+    @Override
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
         User user = UserMapper.toEntity(userRequestDTO);
         User savedUser = userRepository.save(user);
@@ -28,6 +29,7 @@ public class UserService {
     }
 
     // Get user by ID
+    @Override
     public UserResponseDTO getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
@@ -35,11 +37,13 @@ public class UserService {
     }
 
     // Get all users
+    @Override
     public List<UserResponseDTO> getAllUsers() {
         return UserMapper.toResponseDTOs(userRepository.findAll());
     }
 
     // Update user by ID
+    @Override
     public UserResponseDTO updateUser(Long id, UserRequestDTO userRequestDTO) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
@@ -59,6 +63,7 @@ public class UserService {
     }
 
     // Delete user by ID
+    @Override
     public void deleteUser(Long id) {
         if (!userRepository.existsById(id)) {
             throw new ResourceNotFoundException("User not found with id: " + id);
@@ -73,6 +78,7 @@ public class UserService {
      * @return A list of granted authorities associated with the user.
      * @throws RuntimeException if the user is not found.
      */
+    @Override
     public List<GrantedAuthority> getAuthorities(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));

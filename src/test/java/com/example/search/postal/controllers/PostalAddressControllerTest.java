@@ -2,10 +2,9 @@ package com.example.search.postal.controllers;
 
 import com.example.search.postal.dtos.PostalAddressRequestDTO;
 import com.example.search.postal.dtos.PostalAddressResponseDTO;
-import com.example.search.postal.security.JwtTokenUtil;
 import com.example.search.postal.security.TestSecurityConfig;
-import com.example.search.postal.services.PostalAddressService;
-import com.example.search.postal.services.UserService;
+import com.example.search.postal.services.IPostalAddressService;
+import com.example.search.postal.services.IUserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,10 +36,10 @@ public class PostalAddressControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
-    private PostalAddressService postalAddressService;
+    private IPostalAddressService postalAddressService;
 
     @MockitoBean
-    private UserService userService;
+    private IUserService userService;
 
     @InjectMocks
     private PostalAddressController postalAddressController;

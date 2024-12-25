@@ -1,7 +1,7 @@
 package com.example.search.postal.controllers;
 
 import com.example.search.postal.dtos.CityResponseDTO;
-import com.example.search.postal.services.CityService;
+import com.example.search.postal.services.ICityService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 public class CityControllerTest {
 
     @Mock
-    private CityService cityService;
+    private ICityService cityService;
 
     @InjectMocks
     private CityController cityController;

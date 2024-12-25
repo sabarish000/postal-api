@@ -2,7 +2,7 @@ package com.example.search.postal.controllers;
 
 import com.example.search.postal.dtos.PostalAddressRequestDTO;
 import com.example.search.postal.dtos.PostalAddressResponseDTO;
-import com.example.search.postal.services.PostalAddressService;
+import com.example.search.postal.services.IPostalAddressService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,9 +21,10 @@ import java.util.List;
 @RequestMapping("/api/address")
 @Tag(name = "Postal Address Controller", description = "APIs to manage postal addresses")
 public class PostalAddressController {
-    private final PostalAddressService postalAddressService;
+    // Decoupling the service from controller
+    private final IPostalAddressService postalAddressService;
 
-    public PostalAddressController(PostalAddressService postalAddressService) {
+    public PostalAddressController(IPostalAddressService postalAddressService) {
         this.postalAddressService = postalAddressService;
     }
 

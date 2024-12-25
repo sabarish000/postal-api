@@ -4,7 +4,7 @@ import com.example.search.postal.dtos.AuthResponseDTO;
 import com.example.search.postal.dtos.LoginRequestDTO;
 import com.example.search.postal.models.User;
 import com.example.search.postal.security.JwtTokenUtil;
-import com.example.search.postal.services.AuthService;
+import com.example.search.postal.services.IAuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Authentication", description = "APIs for user authentication and authorization")
 public class AuthController {
     Logger logger = LoggerFactory.getLogger(AuthController.class);
-    private final AuthService authService;
+    private final IAuthService authService;
     private final JwtTokenUtil jwtTokenUtil;
-    public AuthController(AuthService authService, JwtTokenUtil jwtTokenUtil) {
+    public AuthController(IAuthService authService, JwtTokenUtil jwtTokenUtil) {
         this.authService = authService;
         this.jwtTokenUtil = jwtTokenUtil;
     }

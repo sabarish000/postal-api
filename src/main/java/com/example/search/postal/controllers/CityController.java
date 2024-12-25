@@ -1,7 +1,7 @@
 package com.example.search.postal.controllers;
 
 import com.example.search.postal.dtos.CityResponseDTO;
-import com.example.search.postal.services.CityService;
+import com.example.search.postal.services.ICityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,9 +21,9 @@ import java.util.List;
 @RequestMapping("/api/city")
 @Tag(name = "City Controller", description = "Handles city-related operations")
 public class CityController {
-    private final CityService cityService;
+    private final ICityService cityService;
 
-    public CityController(CityService cityService) {
+    public CityController(ICityService cityService) {
         this.cityService = cityService;
     }
 

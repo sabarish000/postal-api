@@ -2,7 +2,7 @@ package com.example.search.postal.controllers;
 
 import com.example.search.postal.dtos.UserRequestDTO;
 import com.example.search.postal.dtos.UserResponseDTO;
-import com.example.search.postal.services.UserService;
+import com.example.search.postal.services.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,9 +19,9 @@ import java.util.List;
 @RequestMapping("/api/users")
 @Tag(name = "User Controller", description = "APIs for managing users")
 public class UserController {
-    private final UserService userService;
+    private final IUserService userService;
 
-    public UserController(UserService userService) {
+    public UserController(IUserService userService) {
         this.userService = userService;
     }
 

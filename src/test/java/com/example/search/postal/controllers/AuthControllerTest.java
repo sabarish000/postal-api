@@ -6,6 +6,7 @@ import com.example.search.postal.models.Role;
 import com.example.search.postal.models.User;
 import com.example.search.postal.security.JwtTokenUtil;
 import com.example.search.postal.services.AuthService;
+import com.example.search.postal.services.IAuthService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +23,9 @@ import static org.mockito.ArgumentMatchers.anyString;
 @ExtendWith(MockitoExtension.class)
 public class AuthControllerTest {
     @Mock
-    private AuthService authService;
+    private IAuthService authService;
+    @InjectMocks
+    private AuthService authServiceImpl;
     @Mock
     private JwtTokenUtil jwtTokenUtil;
     @InjectMocks

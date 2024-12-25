@@ -1,6 +1,6 @@
 package com.example.search.postal.security;
 
-import com.example.search.postal.services.UserService;
+import com.example.search.postal.services.IUserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,9 +16,9 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenUtil jwtTokenUtil;
-    private final UserService userService;
+    private final IUserService userService;
 
-    public JwtAuthenticationFilter(JwtTokenUtil jwtTokenUtil, UserService userService) {
+    public JwtAuthenticationFilter(JwtTokenUtil jwtTokenUtil, IUserService userService) {
         this.jwtTokenUtil = jwtTokenUtil;
         this.userService = userService;
     }
