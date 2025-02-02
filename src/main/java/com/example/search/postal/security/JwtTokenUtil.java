@@ -3,6 +3,7 @@ package com.example.search.postal.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -11,8 +12,15 @@ import java.util.Date;
 
 @Component
 public class JwtTokenUtil {
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
-    private static final Key KEY = Keys.hmacShaKeyFor(Base64.getDecoder().decode("2zYjVlZmk5yMEcQRtyFQd2DoTYtRz2Ez8Bsb6IlMiFU="));
+    private final long EXPIRATION_TIME;// 1 hour
+    // In real world, uses a Secrets Manager (AWS Secrets Manager, HashiCorp Vault, Azure Key Vault)
+    private final Key KEY;
+
+    public JwtTokenUtil(@Value("${jwt.secret}") String secret,
+                        @Value("${jwt.expiration}") Long expiationInMillis) {
+        KEY = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secret));
+        EXPIRATION_TIME = expiationInMillis;
+    }
 
     // Generate JWT Token
     public String generateToken(String username) {
